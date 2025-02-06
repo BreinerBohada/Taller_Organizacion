@@ -5,31 +5,26 @@ import random
 
 numeros = [random.randint(1, 100) for _ in range(20)]
 
-def merge_sort(numeros):
-    if len(numeros) <= 1:
-        return numeros
-    
-    medio = len(numeros) // 2
-    izquierda = merge_sort(numeros[:medio])
-    derecha = merge_sort(numeros[medio:])
-    return merge(izquierda, derecha)
+mitad = len(numeros) // 2
+izquierda = numeros[:mitad]
+derecha = numeros[mitad:]
 
-def merge(izquierda, derecha):
-    resultado = []
-    i = j = 0
+while len(izquierda) > 1:
+    mitad_izq = len(izquierda) // 2
+    izquierda = izquierda[:mitad_izq]
+while len(derecha) > 1:
+    mitad_der = len(derecha) // 2
+    derecha = derecha[:mitad_der]
 
-    while i < len(izquierda) and j < len(derecha):
-        if izquierda[i] < derecha[j]:
-            resultado.append(izquierda[i])
-            i += 1
-        else:
-            resultado.append(derecha[j])
-            j += 1
-    
-    resultado.extend(izquierda[i:])
-    resultado.extend(derecha[j:])
-    return resultado
+resultado = []
+while izquierda and derecha:
+    if izquierda[0] < derecha[0]:
+        resultado.append(izquierda.pop(0))
+    else:
+        resultado.append(derecha.pop(0))
 
-numeros_ordenados = merge_sort(numeros)
+resultado += izquierda
+resultado += derecha
 
-print("Lista de números aleatorios ordenada:", numeros_ordenados)
+numeros = resultado
+numeros
